@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/swift
-# Edit at https://www.toptal.com/developers/gitignore?templates=swift
+# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager
+# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpackagemanager
 
 ### Swift ###
 # Xcode
@@ -86,4 +86,12 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# End of https://www.toptal.com/developers/gitignore/api/swift
+### SwiftPackageManager ###
+Packages
+xcuserdata
+*.xcodeproj
+
+
+# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager
+
+Keys.swift

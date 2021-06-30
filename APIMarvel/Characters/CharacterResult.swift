@@ -7,7 +7,7 @@ struct CharacterResult: Codable {
     let description: String?
     let modified: String?
     let resourceURI: String?
-    let urls: [CharacterURL]?
+    let urls: [ApiURL]?
     let thumbnail: Thumbnail?
     let comics: Comics?
     let stories: Stories?

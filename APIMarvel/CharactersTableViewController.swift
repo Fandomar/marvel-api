@@ -62,9 +62,11 @@ class CharactersTableViewController: UITableViewController {
     }
     
         override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            //heroe = allHeroes[indexPath.row]
-            //performSegue(withIdentifier: "HeroeDetail", sender: self)
-            print("El id es: \(allHeroes[indexPath.row].id)")
+            if indexPath.section == 0 {
+                heroe = allHeroes[indexPath.row]
+                performSegue(withIdentifier: "HeroeDetail", sender: self)
+                print("El id es: \(allHeroes[indexPath.row].id)")
+            }
         }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

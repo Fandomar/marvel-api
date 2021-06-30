@@ -21,7 +21,7 @@ class HeroeDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     //MARK: - Variables
     var misCells: MCell = MCell(xibName: "ComicCVCell", idReuse: "ComicCVCell")
     var character: CharacterResult?
-    var allComics: [Comics]?
+    var allComics: [Comics] = []
     let client = NetworkClient()
     var offset = 0
     
@@ -46,73 +46,82 @@ class HeroeDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         // Register cell classes
         self.comicsCollection!.register(UINib(nibName: misCells.xibName, bundle: nil), forCellWithReuseIdentifier: misCells.idReuse)
         //self.storiesCollection!.register(UINib(nibName: misCells.xibName, bundle: nil), forCellWithReuseIdentifier: misCells.idReuse)
+        
+        getHeroComics()
+        setCharacterData()
     }
     
     // MARK: UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        guard let secureComics = character?.comics else { return 0}
-        return 0
+        return allComics.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: misCells.idReuse, for: indexPath) as! ComicCVCell
         
-        //let myAlbum = allAlbums[indexPath.row]
-        guard let secureComics = allComics else { return cell}
-        cell.setData(comic: secureComics[indexPath.row])
-        print(indexPath.row)
+        cell.setData(comic: allComics[indexPath.row])
+        print("Posicion actual de allComics: \(allComics[indexPath.row])")
+        print("Todos los comics: \(allComics)")
         
         return cell
     }
     
     
     //MARK: - Functions
-//    func getHeroeDetail() {
-//        guard let secureCharacterId = character?.id else { return }
-//        
-//        client.getCharacterDetail(offset: offset, characterId: secureCharacterId) { result in
-//            switch result {
-//            case .success(let characters):
-//                guard let secureResults = characters.data?.results else { return }
-//                
-//                self.offset += secureResults.count
-//                self.allHeroes.append(contentsOf: secureResults)
-//                self.comicsCollection.reloadData()
-//                self.isLoading = false
-//                
-//                print("El último heroe es: \(characters.data?.results?.last)")
-//                print("Offset = \(self.offset)")
-//            case .failure(let error):
-//                // Vamos a mostrar una alerta al usuario con la descripcion del error
-//                print(error.errorDescription)
-//            }
-//        }
-//        
-//        
-//        client.getCharacters(offset: offset) { result in
-//            switch result {
-//            case .success(let characters):
-//                guard let secureResults = characters.data?.results else { return }
-//                
-//                self.offset += secureResults.count
-//                self.allHeroes.append(contentsOf: secureResults)
-//                self.tableView.reloadData()
-//                self.isLoading = false
-//                
-//                print("El último heroe es: \(characters.data?.results?.last)")
-//                print("Offset = \(self.offset)")
-//            case .failure(let error):
-//                // Vamos a mostrar una alerta al usuario con la descripcion del error
-//                print(error.errorDescription)
-//            }
-//        }
-//    }
+    func getHeroComics() {
+        guard let secureCharacterId = character?.id else { return }
+        
+        client.getCharacterComics(offset: offset, characterId: secureCharacterId) { result in
+            switch result {
+            case .success(let characters):
+                guard let secureResults = characters.data?.results else { return }
+                
+                secureResults.forEach { details in
+                    guard let secureComics = details.comics else { return }
+                    
+                    self.allComics.append(secureComics)
+                    
+                    print("Todos los comics: \(self.allComics)")
+                }
+                
+                self.offset += secureResults.count
+                self.comicsCollection.reloadData()
+                //self.isLoading = false
+                
+                print("Offset = \(self.offset)")
+            case .failure(let error):
+                // Vamos a mostrar una alerta al usuario con la descripcion del error
+                print(error.errorDescription)
+            }
+        }
+        //
+        //
+        //        client.getCharacters(offset: offset) { result in
+        //            switch result {
+        //            case .success(let characters):
+        //                guard let secureResults = characters.data?.results else { return }
+        //
+        //                self.offset += secureResults.count
+        //                self.allHeroes.append(contentsOf: secureResults)
+        //                self.tableView.reloadData()
+        //                self.isLoading = false
+        //
+        //                print("El último heroe es: \(characters.data?.results?.last)")
+        //                print("Offset = \(self.offset)")
+        //            case .failure(let error):
+        //                // Vamos a mostrar una alerta al usuario con la descripcion del error
+        //                print(error.errorDescription)
+        //            }
+        //        }
+    }
     
     
     
     func setCharacterData() {
+        
+        
         guard let securePath = character?.thumbnail?.path else { return }
         guard let secureExtension = character?.thumbnail?.thumbExtension else { return }
         
@@ -125,17 +134,17 @@ class HeroeDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         heroeImage.layer.cornerRadius = 8
         
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 struct MCell {

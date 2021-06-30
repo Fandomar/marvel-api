@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CharacterURL: Codable {
+struct ApiURL: Codable {
     let type: String?
     let url: String?
 }

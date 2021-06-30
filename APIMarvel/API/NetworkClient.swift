@@ -8,6 +8,7 @@ class NetworkClient {
     private let baseUrl = "https://gateway.marvel.com"
     private let charactersPath = "/v1/public/characters"
     private let characterDetailPath = "/v1/public/characters/"
+    private let characterComicsPath = "/comics"
     
     private lazy var timestamp: Int = {
         return Int(Date().timeIntervalSince1970)
@@ -79,9 +80,9 @@ class NetworkClient {
         }
     }
     
-    func getCharacterDetail(offset: Int, characterId: Int, completion: @escaping (Result<CharacterResponse, NetworkError>) -> Void) {
+    func getCharacterComics(offset: Int, characterId: Int, completion: @escaping (Result<CharacterResponse, NetworkError>) -> Void) {
         AF.request(
-            "\(baseUrl)\(characterDetailPath)\(1017100)",
+            "\(baseUrl)\(characterDetailPath)\(characterId)\(characterComicsPath)",
             method: .get,
             parameters: [
                 "apikey": publicKey,

@@ -1,4 +1,4 @@
-# App using Marvel Oficial API
+# App using Marvel Official API
 
 In order to use this app, you must create a file called Keys.swift and add your keys obtained from the website: <a href="https://developer.marvel.com/account" target="_blank"> Marvel's Official Site </a> (you must register).
 

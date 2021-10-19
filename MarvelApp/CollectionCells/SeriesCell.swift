@@ -20,7 +20,7 @@ class SeriesCell: UICollectionViewCell {
         guard let securePath = data.thumbnail?.path else { return }
         guard let secureExtension = data.thumbnail?.imageExtension else { return }
         
-        let secureURL = "\(securePath.replacingOccurrences(of: "https", with: "https")).\(secureExtension)"
+        let secureURL = "\(securePath.replacingOccurrences(of: "http", with: "https")).\(secureExtension)"
         let url = URL(string: secureURL)
         
         //print("\(url)")

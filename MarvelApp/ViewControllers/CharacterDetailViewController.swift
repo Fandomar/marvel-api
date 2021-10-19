@@ -214,5 +214,29 @@ class CharacterDetailViewController: UIViewController, UICollectionViewDataSourc
         return CGSize(width: size.width, height: 30)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            print("TOUCH ON:", indexPath.row)
+            
+            if collectionView == series {
+
+                guard let secureSerie = allSeries[indexPath.row].urls?[0].url else {return}
+                print(secureSerie)
+                //Abrir navegador con esa URL
+                UIApplication.shared.open(URL(string: String(secureSerie))!)
+                
+            } else if (collectionView == comics){
+                guard let secureComic = allComics[indexPath.row].urls?[0].url else {return}
+                print(secureComic)
+                //Abrir navegador con esa URL
+                UIApplication.shared.open(URL(string: String(secureComic))!)
+                
+            } else {
+                guard let secureEvent = allEvents[indexPath.row].urls?[0].url else {return}
+                print(secureEvent)
+                //Abrir navegador con esa URL
+                UIApplication.shared.open(URL(string: String(secureEvent))!)
+            }
+        }
+    
     
 }
